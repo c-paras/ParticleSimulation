@@ -30,7 +30,7 @@ accelerate t all@(p:ps) = accelerate' t p all ps
 
     -- updates the velocity of one particle based on the force between it and all the other particles
     accelerateOne :: Float -> Particle -> [Particle] -> Particle
-    accelerateOne t p1 [] = p1
+    accelerateOne t p1 []     = p1
     accelerateOne t p1 (p:ps) = accelerateOne t (updateVelocity t p1 p) ps
 
     -- changes velocity of one particle based on force between that particle and another particle
@@ -38,9 +38,17 @@ accelerate t all@(p:ps) = accelerate' t p all ps
     updateVelocity t p1@(Particle m p v@(vx, vy)) p2 = Particle m p (vx + deltaVx, vy + deltaVy)
       where
         (ax, ay) = force p1 p2
-        deltaVx = ax * t
-        deltaVy = ay * t
+        deltaVx  = ax * t
+        deltaVy  = ay * t
 
 -- progress the World state
 advanceWorld :: unused -> Float -> World -> World
-advanceWorld u f w = w -- TODO
+advanceWorld u f w@(World f1 f2 f3 p) = World f1 f2 f3 p''
+  where
+    p'  = accelerate    (f * f3) p
+    p'' = moveParticles (f * f3) p'
+
+    -- updates position of all particles
+    moveParticles :: Float -> [Particle] -> [Particle]
+    moveParticles t []     = []
+    moveParticles t (p:ps) = moveParticle t p : moveParticles t ps
