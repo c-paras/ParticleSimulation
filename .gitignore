@@ -1,0 +1,5 @@
+*.htm
+*.o
+*.hi
+particles
+build/
