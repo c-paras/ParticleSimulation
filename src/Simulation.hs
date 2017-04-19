@@ -42,7 +42,7 @@ accelerate t all@(p:ps) = accelerate' t p all ps
 
 -- progress the World state by updating the velocity and position of all particles
 advanceWorld :: unused -> Float -> World -> World
-advanceWorld u f w@(World f1 f2 f3 p) = World f1 f2 f3 p''
+advanceWorld _ f w@(World f1 f2 f3 p) = World f1 f2 f3 p''
   where
     p'  = accelerate    (f * f3) p
     p'' = moveParticles (f * f3) p'
