@@ -3,3 +3,7 @@ all:
 
 clean:
 	cd build && rm -f *.o *.hi
+
+vclean:
+	rm -f particles
+	cd build && rm -f *.o *.hi
