@@ -10,12 +10,16 @@ import Physics
 
 -- move a particle according to its velocity for the given number of (simulated) seconds
 moveParticle :: Float -> Particle -> Particle
-moveParticle = error "You need to implement Simulation.moveParticle"
-    
+moveParticle t (Particle m p@(px, py) v@(vx, vy)) =
+  Particle m (px + deltaX, py + deltaY) v -- only change the position
+  where
+    deltaX = vx * t -- change position component-wise
+    deltaY = vy * t
+
 -- accelerate a particle in dependence on the gravitational force excerted by all other particles for the given number of (simulated) seconds
 accelerate :: Float -> [Particle] -> [Particle]
-accelerate = error "You need to implement Simulation.accelerate"
+accelerate f p = p -- TODO
 
 -- progress the World state
 advanceWorld :: unused -> Float -> World -> World
-advanceWorld = error "You need to implement Simulation.advanceWorld"
+advanceWorld u f w = w -- TODO
